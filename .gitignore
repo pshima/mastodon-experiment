@@ -1,0 +1,5 @@
+**/.terraform/*
+crash.log
+crash.*.log
+.terraformrc
+terraform.rc
