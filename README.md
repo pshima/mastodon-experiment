@@ -27,7 +27,9 @@ Internet -> ALB -> Autoscaled App Mastodon -> AWS DB and Cache needs
 
 I barely know anything about Mastodon architecture or needs so may need to modify this.
 
+Is EKS in here somewhere?  maybe.
+
 ## AWS Setup
 We setup a brand new account and we'll skip using the default VPC and setup everything we need from scratch.
 
-We
+
