@@ -9,7 +9,7 @@ services:
     networks:
       - external_network
     ports:
-      - '127.0.0.1:3000:3000'
+      - '0.0.0.0:3000:3000'
     volumes:
       - ./public/system:/mastodon/public/system
     healthcheck:
@@ -24,7 +24,7 @@ services:
     networks:
       - external_network
     ports:
-      - '127.0.0.1:4000:4000'
+      - '0.0.0.0:4000:4000'
     volumes:
       - ./public/system:/mastodon/public/system
     healthcheck:
