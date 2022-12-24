@@ -1,0 +1,45 @@
+version: '3'
+services:
+  web:
+    build: .
+    image: peteshima/mastodon-experiment
+    restart: always
+    env_file: .env.production
+    command: bash -c "rm -f /mastodon/tmp/pids/server.pid; bundle exec rails s -p 3000"
+    networks:
+      - external_network
+    healthcheck:
+      test: ['CMD-SHELL', 'wget -q --spider --proxy=off localhost:3000/health || exit 1']
+    ports:
+      - '127.0.0.1:3000:3000'
+    volumes:
+      - ./public/system:/mastodon/public/system
+
+  streaming:
+    build: .
+    image: peteshima/mastodon-experiment
+    restart: always
+    env_file: .env.production
+    command: node ./streaming
+    networks:
+      - external_network
+    healthcheck:
+      test: ['CMD-SHELL', 'wget -q --spider --proxy=off localhost:4000/api/v1/streaming/health || exit 1']
+    ports:
+      - '127.0.0.1:4000:4000'
+
+  sidekiq:
+    build: .
+    image: peteshima/mastodon-experiment
+    restart: always
+    env_file: .env.production
+    command: bundle exec sidekiq
+    networks:
+      - external_network
+    volumes:
+      - ./public/system:/mastodon/public/system
+    healthcheck:
+      test: ['CMD-SHELL', "ps aux | grep '[s]idekiq\ 6' || false"]
+
+networks:
+  external_network:
